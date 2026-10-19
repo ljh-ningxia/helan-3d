@@ -1,0 +1,17 @@
+{
+  "width": 437,
+  "height": 1120,
+  "zoom": 10,
+  "tile_x0": 812,
+  "tile_y0": 390,
+  "tile_x1": 813,
+  "tile_y1": 394,
+  "lon_min": 105.55,
+  "lon_max": 106.15,
+  "lat_min": 38.15,
+  "lat_max": 39.35,
+  "elev_min": 1107.0,
+  "elev_max": 3520.0,
+  "source": "AWS Terrain Tiles (SRTM 1arcsec / 3DEP), Terrarium encoding",
+  "encoding": "uint16 little-endian, row-major, offset 16-byte header (uint32 w,h; float32 emin,emax)"
+}
