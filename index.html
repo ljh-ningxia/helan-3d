@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>贺兰山 · 3D 地形 | Helan Mountains 3D Terrain</title>
+<style>
+  :root { color-scheme: dark; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; overflow: hidden; background: #0a0e14; }
+  #app { position: fixed; inset: 0; }
+  canvas { display: block; }
+
+  .hud {
+    position: fixed; left: 20px; top: 20px; z-index: 10;
+    color: #dce6f2; font-family: ui-monospace, "Cascadia Code", Consolas, "Microsoft YaHei", monospace;
+    user-select: none; pointer-events: none;
+  }
+  .hud h1 { font-size: 20px; font-weight: 700; letter-spacing: .05em; text-shadow: 0 2px 12px rgba(0,0,0,.6); }
+  .hud .sub { font-size: 12px; color: #9fb3c8; margin-top: 4px; }
+  .hud .stats { font-size: 11px; color: #7d93a9; margin-top: 10px; line-height: 1.7; }
+
+  .legend {
+    position: fixed; right: 20px; top: 20px; z-index: 10;
+    background: rgba(10, 16, 26, .72); border: 1px solid rgba(140, 170, 200, .18);
+    border-radius: 10px; padding: 12px 14px; backdrop-filter: blur(8px);
+    color: #dce6f2; font-family: ui-monospace, Consolas, "Microsoft YaHei", monospace;
+    font-size: 11px; user-select: none;
+  }
+  .legend .bar { width: 160px; height: 10px; border-radius: 5px; margin: 6px 0;
+    background: linear-gradient(90deg,#274c43,#5a7d4f,#a8a06a,#c9975b,#e8dcc8,#ffffff); }
+  .legend .row { display: flex; justify-content: space-between; width: 160px; color: #9fb3c8; }
+
+  .controls {
+    position: fixed; left: 20px; bottom: 20px; z-index: 10;
+    display: flex; gap: 8px; flex-wrap: wrap;
+  }
+  .controls button {
+    background: rgba(16, 24, 38, .78); color: #cfe0f0; cursor: pointer;
+    border: 1px solid rgba(140, 170, 200, .22); border-radius: 8px;
+    padding: 8px 14px; font-size: 12px;
+    font-family: ui-monospace, Consolas, "Microsoft YaHei", monospace;
+    transition: background .15s, border-color .15s;
+    backdrop-filter: blur(8px);
+  }
+  .controls button:hover { background: rgba(40, 60, 90, .85); border-color: rgba(140, 190, 255, .45); }
+  .controls button.on { background: #1c4d8f; border-color: #4b8fd4; color: #fff; }
+
+  .loading {
+    position: fixed; inset: 0; z-index: 50; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 14px;
+    background: #0a0e14; color: #9fb3c8;
+    font-family: ui-monospace, Consolas, "Microsoft YaHei", monospace;
+    transition: opacity .5s; 
+  }
+  .loading.hide { opacity: 0; pointer-events: none; }
+  .spinner { width: 34px; height: 34px; border-radius: 50%;
+    border: 3px solid rgba(120,160,210,.2); border-top-color: #6ea8e8;
+    animation: spin 0.9s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .err { color: #ff8f8f; max-width: 70ch; line-height: 1.6; font-size: 12px; white-space: pre-wrap; }
+
+  a.credit { color: #5d7astro990; }
+  .credit {
+    position: fixed; right: 20px; bottom: 16px; z-index: 10;
+    color: #5d7790; font-size: 10.5px; font-family: ui-monospace, Consolas, monospace;
+    text-decoration: none; user-select: none;
+  }
+  .credit a { color: #7fa8cc; }
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<div class="hud">
+  <h1>贺兰山 · 3D 地形</h1>
+  <div class="sub">HELAN MOUNTAINS — REAL SRTM TERRAIN</div>
+  <div class="stats" id="stats"></div>
+</div>
+
+<div class="legend">
+  <div>高程 ELEVATION</div>
+  <div class="bar"></div>
+  <div class="row"><span>1107 m</span><span>3520 m</span></div>
+</div>
+
+<div class="controls">
+  <button id="btnRotate" class="on">自动旋转</button>
+  <button id="btnWire">线框</button>
+  <button id="btnContour">等高线</button>
+  <button id="btnReset">复位视角</button>
+</div>
+
+<a class="credit" href="https://github.com/ljh-ningxia/helan-3d" target="_blank">
+  data: NASA SRTM via AWS Terrain Tiles · built by 北渚
+</a>
+
+<div class="loading" id="loading">
+  <div class="spinner"></div>
+  <div id="loadingText">正在加载地形数据…</div>
+</div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "./libs/three/three.module.js",
+    "three/addons/": "./libs/three/"
+  }
+}
+</script>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
