@@ -37,7 +37,9 @@ python -m http.server 8000
 
 ## 📡 在线演示
 
-*(待 GitHub Pages 审核通过后填入)*
+**👉 [https://ljh-ningxia.github.io/helan-3d/](https://ljh-ningxia.github.io/helan-3d/)**
+
+打开即转，拖拽旋转，滚轮缩放。无需安装任何东西。
 
 ## 🗺️ 数据来源
 
